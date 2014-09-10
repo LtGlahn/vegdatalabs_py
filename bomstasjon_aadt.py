@@ -92,8 +92,9 @@ def getRelevantData( data):
         if success:
             try:
                 trafikkmengde = hentAadt( bomstasjon)
-                if trafikkmengde.antall > 1:
-                    pdb.set_trace()
+                # if trafikkmengde.antall > 1:
+                if not sjekkAntall(trafikkmengde):
+                    # pdb.set_trace()
                     raise Exception, "Fant mer enn 1 trafikkmengde-forekomst"
 
                 aadtTotal = trafikkmengde.vegObjekter[0].egenskap( 4623)
@@ -141,7 +142,7 @@ def getRelevantData( data):
 
     print "Hentet ", count, "bomstasjoner - ", miscount, "feilet", " og ", \
             miscountAadt, " mangler Trafikkmengde"
-    pdb.set_trace()
+
     return (newdata, bomsGeoJson, aadtGeoJson)
 
 def hentAadt( vegObjekt):
@@ -153,6 +154,16 @@ def hentAadt( vegObjekt):
     trafikkmengde = nvdb.query_search( objektTyper, lokasjon = lokasjon, params = params)
 
     return trafikkmengde
+
+def sjekkAntall( sokeresultat):
+    # Bug i NVDB API (per 10.9)? Kall som er garantert å gi kun en forekomst
+    # gir nå dubletter...?
+    if sokeresultat.antall == 1:
+        return True
+    elif sokeresultat.antall == 2 and sokeresultat.vegObjekter[0].id == sokeresultat.vegObjekter[1].id:
+        return True
+
+    return False
 
 def abonnementstype( nvdbObj):
         btype = nvdbObj.egenskap( 9390)
