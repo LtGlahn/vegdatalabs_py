@@ -8,6 +8,6 @@ nvdb.py - henter informasjon fra NVDB api og har forskjellige (delvis objektorie
 bomstasjon_aadt.py - Henter bomstasjoner, og henter deretter trafikkmengde for den veglenka der bomstasjonen står. 
 
 
-*.csv, *.geojoson - resultatfiler, på litt ulike formater. 
+*.csv, *.json - resultatfiler, på litt ulike formater. 
 
 
