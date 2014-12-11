@@ -58,7 +58,6 @@ def getRelevantData( data):
     newdata = []
     bomsGeoJson = { "type": "FeatureCollection", "features": [] }
     aadtGeoJson = { "type": "FeatureCollection", "features": [] }
-    count = 0
     miscount = 0
     miscountAadt = 0
 #    vegobjekter = data.objekter()
@@ -130,7 +129,6 @@ def getRelevantData( data):
                             harAp, apBeskr, kommunenr, bomstasjonId,
                             aadtTotal, aadtLGV, aadtYear, aadtId
                             ] )
-            count += 1
             bomsGeoJson['features'].append( makeGeoJson( bomstasjon,
                  { 'bnavn1' : bnavn1, 'tliten' : tliten, 'tstor' : tstor,
                     'vegnummer' : vegnummer, 'harAp' : harAp,
@@ -140,7 +138,7 @@ def getRelevantData( data):
                     'aadtId': aadtId
                 }))
 
-    print "Hentet ", count, "bomstasjoner - ", miscount, "feilet", " og ", \
+    print "Hentet ", len(newdata), "bomstasjoner - ", miscount, "feilet", " og ", \
             miscountAadt, " mangler Trafikkmengde"
 
     return (newdata, bomsGeoJson, aadtGeoJson)
